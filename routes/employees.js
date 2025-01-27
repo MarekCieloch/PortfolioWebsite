@@ -54,7 +54,7 @@ router.get("/projects/employees/edit/:id", async (req, res) => {
       return res.status(404).send("Employee not found");
     }
 
-    res.render("editEmployee", { employee }); // Pass the employee data to the EJS form
+    res.render("projects/editEmployee", { employee }); // Pass the employee data to the EJS form
   } catch (error) {
     res.status(500).send("Error fetching employee: " + error.message);
   }
@@ -83,21 +83,15 @@ router.put("/projects/employees/:id", async (req, res) => {
   }
 });
 
-// DELETE: Route to delete an employee by ID
-router.delete("/projects/employees/:id", async (req, res) => {
+// Job Tracker: Delete an employee
+router.post("/projects/employees/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
-    const deletedEmployee = await Employee.findByIdAndDelete(id);
-
-    if (!deletedEmployee) {
-      return res.status(404).send("Employee not found");
-    }
-
-    // Redirect back to the employee list
+    await Employee.findByIdAndDelete(id);
     res.redirect("/projects/employees");
-  } catch (error) {
-    res.status(500).send("Error deleting employee: " + error.message);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting employee");
   }
 });
 
