@@ -12,12 +12,13 @@ import methodOverride from "method-override";
 import apiRouting from "./routes/apiRouter.js";
 
 dotenv.config(); // Load environment variables
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
 
-mongoose.connect("mongodb://127.0.0.1:27017/jobTrackerDB", {
-  serverSelectionTimeoutMS: 10000, // Optional: Avoid indefinite timeouts
-});
+mongoose.connect(
+  "mongodb+srv://access:XG9Agc6GQcjLDgYT@portfoliodatabase.2xetk.mongodb.net/?retryWrites=true&w=majority&appName=PortfolioDatabase",
+  {
+    serverSelectionTimeoutMS: 10000, // Optional: Avoid indefinite timeouts
+  }
+);
 
 mongoose.connection.on("connected", () => {
   console.log("Connected to MongoDB");
