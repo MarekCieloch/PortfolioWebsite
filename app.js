@@ -36,7 +36,9 @@ app.set("views", [
 ]);
 
 // Global partials for all views
-app.locals.header = "partials/header";
+app.locals.headerContact = "partials/headerContact";
+app.locals.headerHome = "partials/headerHome";
+app.locals.headerProjects = "partials/headerProjects";
 app.locals.footer = "partials/footer";
 
 // Middleware

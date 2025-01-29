@@ -31,6 +31,14 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+#apiParameters {
+  margin-top: 10px;
+  padding: 10px;
+  width: 60%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
 #output {
   margin-top: 20px;

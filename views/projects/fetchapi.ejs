@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <%- include(header) %>
+    <%- include(headerProjects) %>
 
         <div id="app">
             <h1>Dynamic API Fetcher</h1>
@@ -21,15 +21,14 @@
                     (Amsterdam)
                     API</button>
                 <button onclick="fetchAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
-                <button onclick="fetchMinAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
                 <button onclick="fetchAPI('https://catfact.ninja/fact')">Cat Fact API</button>
                 <button onclick="fetchAPI('https://dog.ceo/api/breeds/image/random')"> Dog CEO's API</button>
-                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
-                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
-                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
                 <button onclick="fetchAPI('https://api.adviceslip.com/advice')">Advice Slip API</button>
 
                 <input type="text" id="apiInput" placeholder="Enter API URL" />
+                <input type="text" id="apiParameters"
+                    placeholder="Enter required parameters separated by , (ex name,region,lon)" />
+                <br>
                 <button onclick="fetchCustomAPI()">Fetch Custom API</button>
             </div>
 
@@ -62,6 +61,8 @@
                         document.getElementById("apiData").textContent = `Error: ${error.message}`;
                     }
                 }
+
+
 
                 function fetchCustomAPI() {
                     const apiUrl = document.getElementById("apiInput").value;
