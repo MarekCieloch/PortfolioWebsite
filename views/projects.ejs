@@ -11,87 +11,81 @@
 </head>
 
 <body>
-    <header class="d-flex justify-content-center py-3 sticky-header">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/index" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-        </ul>
-    </header>
+    <%- include(header) %>
 
-    <div class="center-text">
-        Click on the button to see projects
-        CRUD + MongooseDB
-    </div>
-    <div class="centered-container">
-
-        <div class="grid">
-
-            <a class="btn btn-primary" type="button" href="/projects/job-tracker">Job Application Tracker</a>
-            <a class="btn btn-primary" type="button" href="/projects/employees">Employees Database</a>
-            <a class="btn btn-primary" type="button" href="/projects/fetchapi">ISS API</a>
+        <div class="center-text">
+            Click on the button to see projects
+            CRUD + MongooseDB
         </div>
-    </div>
+        <div class="centered-container">
+
+            <div class="grid">
+
+                <a class="btn btn-primary" type="button" href="/projects/job-tracker">Job Application Tracker</a>
+                <a class="btn btn-primary" type="button" href="/projects/employees">Employees Database</a>
+                <a class="btn btn-primary" type="button" href="/projects/fetchapi">ISS API</a>
+            </div>
+        </div>
 
 
-    <div id="/components/footer"></div>
+        <%- include(footer) %>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
 
-    <script>
-        let debugMode = false;
-        // Check if stars have already been destroyed
-        const overlay = document.getElementById('overlay');
-        const stars = document.querySelectorAll('.star');
-        let remainingStars = stars.length;
+            <script>
+                let debugMode = false;
+                // Check if stars have already been destroyed
+                const overlay = document.getElementById('overlay');
+                const stars = document.querySelectorAll('.star');
+                let remainingStars = stars.length;
 
-        // Function to disable scrolling
-        function disableScroll() {
-            document.body.style.overflow = 'hidden';
-        }
+                // Function to disable scrolling
+                function disableScroll() {
+                    document.body.style.overflow = 'hidden';
+                }
 
-        // Function to enable scrolling
-        function enableScroll() {
-            document.body.style.overflow = 'auto';
-        }
+                // Function to enable scrolling
+                function enableScroll() {
+                    document.body.style.overflow = 'auto';
+                }
 
-        // Check localStorage for completion flag
-        if (localStorage.getItem('starsDestroyed') === 'true' && debugMode === false) {
-            // If stars are already destroyed, remove overlay and allow scrolling
-            overlay.style.display = 'none';
-            enableScroll();
-        } else {
-            // Otherwise, block scrolling and handle star interactions
-            disableScroll();
+                // Check localStorage for completion flag
+                if (localStorage.getItem('starsDestroyed') === 'true' && debugMode === false) {
+                    // If stars are already destroyed, remove overlay and allow scrolling
+                    overlay.style.display = 'none';
+                    enableScroll();
+                } else {
+                    // Otherwise, block scrolling and handle star interactions
+                    disableScroll();
 
-            stars.forEach(star => {
-                star.addEventListener('click', function () {
-                    // Get the path to the explode.gif
-                    const explodeGif = this.getAttribute('data-explode');
-                    this.src = explodeGif;
+                    stars.forEach(star => {
+                        star.addEventListener('click', function () {
+                            // Get the path to the explode.gif
+                            const explodeGif = this.getAttribute('data-explode');
+                            this.src = explodeGif;
 
-                    // Wait for the gif to finish playing, then hide the star
-                    const gifDuration = 1700; // Duration of explode.gif in milliseconds
-                    setTimeout(() => {
-                        this.style.display = 'none'; // Hide the star
-                        remainingStars--; // Decrease remaining stars count
+                            // Wait for the gif to finish playing, then hide the star
+                            const gifDuration = 1700; // Duration of explode.gif in milliseconds
+                            setTimeout(() => {
+                                this.style.display = 'none'; // Hide the star
+                                remainingStars--; // Decrease remaining stars count
 
-                        // Check if all stars are destroyed
-                        if (remainingStars === 0) {
-                            overlay.style.display = 'none'; // Remove overlay
-                            enableScroll();
-                            // Save completion in localStorage
-                            localStorage.setItem('starsDestroyed', 'true');
-                        }
-                    }, gifDuration);
-                });
-            });
-        }
-    </script>
-    <script src="js/scripts.js"></script>
+                                // Check if all stars are destroyed
+                                if (remainingStars === 0) {
+                                    overlay.style.display = 'none'; // Remove overlay
+                                    enableScroll();
+                                    // Save completion in localStorage
+                                    localStorage.setItem('starsDestroyed', 'true');
+                                }
+                            }, gifDuration);
+                        });
+                    });
+                }
+            </script>
+            <script src="js/scripts.js"></script>
 </body>
 
 </html>

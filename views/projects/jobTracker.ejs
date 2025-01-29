@@ -11,53 +11,47 @@
 </head>
 
 <body>
-    <header class="d-flex justify-content-center py-3 sticky-header">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/index" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+    <%- include(header) %>
+
+        <h1>Job Application Tracker</h1>
+        <form action="/projects/job-tracker/add" method="POST">
+            <input type="text" name="company" placeholder="Company Name" required />
+            <input type="text" name="position" placeholder="Position" required />
+            <input type="date" name="dateApplied" required />
+            <select name="status">
+                <option value="Applied">Applied</option>
+                <option value="Interview">Interview</option>
+                <option value="Offer">Offer</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+            <button class="btn btn-success px-1" type="submit">Add Job</button>
+        </form>
+
+        <ul>
+            <% if (jobs && jobs.length> 0) { %>
+                <% jobs.forEach(job=> { %>
+                    <li>
+                        <strong>
+                            <%= job.company %>
+                        </strong> - <%= job.position %> (<%= job.dateApplied.toISOString().split('T')[0]%>) (<%=
+                                    job.status %>)
+
+                                    <a href="/projects/job-tracker/edit/<%= job._id %>" class="btn btn-primary">Edit</a>
+                                    <form action="/projects/job-tracker/delete/<%= job._id %>" method="POST"
+                                        style="display:inline;">
+                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                    </form>
+                    </li>
+                    <% }); %>
+                        <% } else { %>
+                            <p>No jobs found.</p>
+                            <% } %>
         </ul>
-    </header>
-
-    <h1>Job Application Tracker</h1>
-    <form action="/projects/job-tracker/add" method="POST">
-        <input type="text" name="company" placeholder="Company Name" required />
-        <input type="text" name="position" placeholder="Position" required />
-        <input type="date" name="dateApplied" required />
-        <select name="status">
-            <option value="Applied">Applied</option>
-            <option value="Interview">Interview</option>
-            <option value="Offer">Offer</option>
-            <option value="Rejected">Rejected</option>
-        </select>
-        <button class="btn btn-success px-1" type="submit">Add Job</button>
-    </form>
-
-    <ul>
-        <% if (jobs && jobs.length> 0) { %>
-            <% jobs.forEach(job=> { %>
-                <li>
-                    <strong>
-                        <%= job.company %>
-                    </strong> - <%= job.position %> (<%= job.dateApplied.toISOString().split('T')[0]%>) (<%= job.status
-                                %>)
-
-                                <a href="/projects/job-tracker/edit/<%= job._id %>" class="btn btn-primary">Edit</a>
-                                <form action="/projects/job-tracker/delete/<%= job._id %>" method="POST"
-                                    style="display:inline;">
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
-                </li>
-                <% }); %>
-                    <% } else { %>
-                        <p>No jobs found.</p>
-                        <% } %>
-    </ul>
 
 
 
-    <div id="footer"></div>
-    <script src="js/scripts.js"></script>
+        <%- include(footer) %>
+            <script src="js/scripts.js"></script>
 </body>
 
 </html>

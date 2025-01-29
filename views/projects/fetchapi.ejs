@@ -11,95 +11,89 @@
 </head>
 
 <body>
-    <header class="d-flex justify-content-center py-3 sticky-header">
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/index" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/projects" class="nav-link">Projects</a></li>
-            <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-        </ul>
-    </header>
+    <%- include(header) %>
 
-    <div id="app">
-        <h1>Dynamic API Fetcher</h1>
-        <div id="controls">
-            <button
-                onclick="fetchAPI('https://api.weatherapi.com/v1/current.json?key=1c44c6f57eb548b0a65131211251701&q=Amsterdam')">Weather
-                (Amsterdam)
-                API</button>
-            <button onclick="fetchAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
-            <button onclick="fetchMinAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
-            <button onclick="fetchAPI('https://catfact.ninja/fact')">Cat Fact API</button>
-            <button onclick="fetchAPI('https://dog.ceo/api/breeds/image/random')"> Dog CEO's API</button>
-            <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
-            <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
-            <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
-            <button onclick="fetchAPI('https://api.adviceslip.com/advice')">Advice Slip API</button>
+        <div id="app">
+            <h1>Dynamic API Fetcher</h1>
+            <div id="controls">
+                <button
+                    onclick="fetchAPI('https://api.weatherapi.com/v1/current.json?key=1c44c6f57eb548b0a65131211251701&q=Amsterdam')">Weather
+                    (Amsterdam)
+                    API</button>
+                <button onclick="fetchAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
+                <button onclick="fetchMinAPI('https://api.wheretheiss.at/v1/satellites/25544')">ISS API</button>
+                <button onclick="fetchAPI('https://catfact.ninja/fact')">Cat Fact API</button>
+                <button onclick="fetchAPI('https://dog.ceo/api/breeds/image/random')"> Dog CEO's API</button>
+                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
+                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
+                <button onclick="fetchAPI('https://jsonplaceholder.typicode.com/posts')">Placeholder API</button>
+                <button onclick="fetchAPI('https://api.adviceslip.com/advice')">Advice Slip API</button>
 
-            <input type="text" id="apiInput" placeholder="Enter API URL" />
-            <button onclick="fetchCustomAPI()">Fetch Custom API</button>
+                <input type="text" id="apiInput" placeholder="Enter API URL" />
+                <button onclick="fetchCustomAPI()">Fetch Custom API</button>
+            </div>
+
+            <div id="output">
+                <h2>API Response</h2>
+                <pre id="apiData"></pre>
+            </div>
         </div>
 
-        <div id="output">
-            <h2>API Response</h2>
-            <pre id="apiData"></pre>
-        </div>
-    </div>
 
-
-    <div id="footer"></div>
+        <%- include(footer) %>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script>
-        console.log("Fetch Api Loaded");
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+            <script>
+                console.log("Fetch Api Loaded");
 
-        async function fetchAPI(url) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                async function fetchAPI(url) {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error(`Error: ${response.status}`);
 
-                const data = await response.json();
-                displayData(data);
-            } catch (error) {
-                console.error("Failed to fetch API data:", error);
-                document.getElementById("apiData").textContent = `Error: ${error.message}`;
-            }
-        }
+                        const data = await response.json();
+                        displayData(data);
+                    } catch (error) {
+                        console.error("Failed to fetch API data:", error);
+                        document.getElementById("apiData").textContent = `Error: ${error.message}`;
+                    }
+                }
 
-        function fetchCustomAPI() {
-            const apiUrl = document.getElementById("apiInput").value;
-            if (apiUrl.trim() === "") {
-                alert("Please enter a valid API URL.");
-                return;
-            }
-            fetchAPI(apiUrl);
-        }
+                function fetchCustomAPI() {
+                    const apiUrl = document.getElementById("apiInput").value;
+                    if (apiUrl.trim() === "") {
+                        alert("Please enter a valid API URL.");
+                        return;
+                    }
+                    fetchAPI(apiUrl);
+                }
 
-        function displayData(data) {
-            const formattedData = formatData(data);
-            document.getElementById("apiData").innerHTML = formattedData;
-        }
+                function displayData(data) {
+                    const formattedData = formatData(data);
+                    document.getElementById("apiData").innerHTML = formattedData;
+                }
 
-        function formatData(data, indent = 0) {
-            const indentation = "&nbsp;".repeat(indent * 4);
-            if (typeof data === "object" && data !== null) {
-                return Object.entries(data)
-                    .map(([key, value]) => {
-                        if (typeof value === "object") {
-                            return `${indentation}<b>${key}:</b><br>${formatData(
-                                value,
-                                indent + 1
-                            )}`;
-                        }
-                        return `${indentation}<b>${key}:</b> ${value}`;
-                    })
-                    .join("<br>");
-            }
-            return `${indentation}${data}`;
-        }
+                function formatData(data, indent = 0) {
+                    const indentation = "&nbsp;".repeat(indent * 4);
+                    if (typeof data === "object" && data !== null) {
+                        return Object.entries(data)
+                            .map(([key, value]) => {
+                                if (typeof value === "object") {
+                                    return `${indentation}<b>${key}:</b><br>${formatData(
+                                        value,
+                                        indent + 1
+                                    )}`;
+                                }
+                                return `${indentation}<b>${key}:</b> ${value}`;
+                            })
+                            .join("<br>");
+                    }
+                    return `${indentation}${data}`;
+                }
 
-    </script>
+            </script>
 </body>
