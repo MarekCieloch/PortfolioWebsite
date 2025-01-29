@@ -38,6 +38,12 @@ const __dirname = path.dirname(__filename);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Make paths available to EJS files globally
+app.locals.partials = {
+  header: path.join(__dirname, "views/partials/header.ejs"),
+  footer: path.join(__dirname, "views/partials/footer.ejs"),
+};
+
 app.use(methodOverride("_method"));
 
 // Serve static files
