@@ -12,41 +12,9 @@
 
 <body>
 
-
-
-    <!-- Overlay to block interaction -->
-    <div id="overlay" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 2rem;
-    ">
-        Destroy all the stars to continue!
-
-        <% for (var i=0; i < 5; i++) { %>
-            <% var topPosition=Math.random() * 60; %>
-                <% var leftPosition=Math.random() * 100; %>
-                    <img src="images/star.gif" class="star" data-explode="images/explode.gif" alt="Star Gif" style="position: absolute; 
-                top: <%= topPosition %>vh; 
-                left: <%= leftPosition %>vw; 
-                width: 50px; 
-                height: 50px; 
-                z-index: 1;">
-                    <% } %>
-    </div>
-
     <%- include(headerHome) %>
 
         <div class="top-container" style="position: relative; height: 50vh; overflow: hidden;">
-            <!-- Generate 10 stars dynamically -->
 
 
             <!-- Title Text -->

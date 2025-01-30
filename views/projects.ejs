@@ -35,56 +35,6 @@
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"></script>
 
-            <script>
-                let debugMode = false;
-                // Check if stars have already been destroyed
-                const overlay = document.getElementById('overlay');
-                const stars = document.querySelectorAll('.star');
-                let remainingStars = stars.length;
-
-                // Function to disable scrolling
-                function disableScroll() {
-                    document.body.style.overflow = 'hidden';
-                }
-
-                // Function to enable scrolling
-                function enableScroll() {
-                    document.body.style.overflow = 'auto';
-                }
-
-                // Check localStorage for completion flag
-                if (localStorage.getItem('starsDestroyed') === 'true' && debugMode === false) {
-                    // If stars are already destroyed, remove overlay and allow scrolling
-                    overlay.style.display = 'none';
-                    enableScroll();
-                } else {
-                    // Otherwise, block scrolling and handle star interactions
-                    disableScroll();
-
-                    stars.forEach(star => {
-                        star.addEventListener('click', function () {
-                            // Get the path to the explode.gif
-                            const explodeGif = this.getAttribute('data-explode');
-                            this.src = explodeGif;
-
-                            // Wait for the gif to finish playing, then hide the star
-                            const gifDuration = 1700; // Duration of explode.gif in milliseconds
-                            setTimeout(() => {
-                                this.style.display = 'none'; // Hide the star
-                                remainingStars--; // Decrease remaining stars count
-
-                                // Check if all stars are destroyed
-                                if (remainingStars === 0) {
-                                    overlay.style.display = 'none'; // Remove overlay
-                                    enableScroll();
-                                    // Save completion in localStorage
-                                    localStorage.setItem('starsDestroyed', 'true');
-                                }
-                            }, gifDuration);
-                        });
-                    });
-                }
-            </script>
             <script src="js/scripts.js"></script>
 </body>
 
