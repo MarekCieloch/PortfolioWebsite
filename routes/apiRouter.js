@@ -52,4 +52,69 @@ router
     }
   });
 
+const API_URL = "https://secrets-api.appbrewery.com/";
+
+//TODO 1: Fill in your values for the 3 types of auth.
+const yourUsername = "riku1337";
+const yourPassword = "1337riku";
+const yourAPIKey = "d10913fe-1227-4c7a-ac96-1223cc8d0220";
+const yourBearerToken = "2ba8595d-82b6-47a4-a213-3178c7814c89";
+
+router.get("/projects/secretsAPI", (req, res) => {
+  res.render("projects/secretsAPI.ejs", { content: "API Response." });
+});
+
+router.get("/noAuth", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}` + `random`);
+    const result = JSON.stringify(response.data);
+
+    res.render("projects/secretsAPI.ejs", { content: result });
+  } catch (error) {
+    console.error(`Failed to make a request: ${error}`);
+  }
+});
+
+router.get("/basicAuth", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}` + `all`, {
+      auth: {
+        username: yourUsername,
+        password: yourPassword,
+      },
+    });
+    const result = JSON.stringify(response.data);
+    res.render("projects/secretsAPI.ejs", { content: result });
+  } catch (error) {
+    console.error(`Failed to make a request: ${error}`);
+  }
+});
+
+router.get("/apiKey", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}` + `filter`, {
+      params: {
+        apiKey: yourAPIKey,
+        score: "5",
+      },
+    });
+    const result = JSON.stringify(response.data);
+    res.render("projects/secretsAPI.ejs", { content: result });
+  } catch (error) {
+    console.error(`Failed to make a request: ${error}`);
+  }
+});
+
+router.get("/bearerToken", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}` + `secrets/42`, {
+      headers: { Authorization: `Bearer ${yourBearerToken}` },
+    });
+    const result = JSON.stringify(response.data);
+    res.render("projects/secretsAPI.ejs", { content: result });
+  } catch (error) {
+    console.error(`Failed to make a request: ${error}`);
+  }
+});
+
 export default router;
